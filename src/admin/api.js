@@ -30,4 +30,5 @@ export const api = {
   rejectCandidates: (page_id, content_ids) =>
     req("POST", "/api/admin/candidate/reject", { page_id, content_ids }),
   patchWork: (b) => req("PATCH", "/api/admin/work", b),
+  addManualWork: (b) => req("POST", "/api/admin/work/manual", b),
 };

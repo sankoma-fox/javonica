@@ -10,6 +10,8 @@ export default function PageDetail({ notify }) {
   const [results, setResults] = useState(null); // 検索結果（input_titleごと）
   const [selected, setSelected] = useState({}); // content_id -> bool
   const [fetching, setFetching] = useState(false);
+  const [manual, setManual] = useState({ content_id: "", title: "", release_date: "", label: "", maker: "" });
+  const [addingManual, setAddingManual] = useState(false);
 
   const load = useCallback(() => {
     api.getPage(id).then(setData).catch((e) => notify(e.message, true));
@@ -42,6 +44,25 @@ export default function PageDetail({ notify }) {
   };
 
   const toggle = (cid) => setSelected((s) => ({ ...s, [cid]: !s[cid] }));
+
+  // --- 手動登録（API承認前用） ---
+  const addManual = async () => {
+    if (!manual.content_id.trim() || !manual.title.trim()) {
+      notify("cid とタイトルは必須です", true);
+      return;
+    }
+    setAddingManual(true);
+    try {
+      const d = await api.addManualWork({ page_id: Number(id), ...manual });
+      notify(d.note || "手動で登録しました");
+      setManual({ content_id: "", title: "", release_date: "", label: "", maker: "" });
+      load();
+    } catch (e) {
+      notify(e.message, true);
+    } finally {
+      setAddingManual(false);
+    }
+  };
 
   // --- 選択した候補を取得 ---
   const doFetch = async () => {
@@ -153,6 +174,41 @@ export default function PageDetail({ notify }) {
         )}
       </div>
 
+      {/* 手動登録（API承認前） */}
+      <div className="panel">
+        <h2>手動で作品を登録（API承認前用）</h2>
+        <p className="muted" style={{ marginBottom: 14 }}>
+          FANZAの作品ページURL「…/cid=<b>abc00123</b>/」の cid を入力します。画像・公式リンクはAPI承認後に自動で入ります。
+        </p>
+        <div className="row">
+          <div className="field">
+            <label>content_id（cid）必須</label>
+            <input value={manual.content_id} onChange={(e) => setManual({ ...manual, content_id: e.target.value })} placeholder="例: abc00123" />
+          </div>
+          <div className="field">
+            <label>タイトル 必須</label>
+            <input value={manual.title} onChange={(e) => setManual({ ...manual, title: e.target.value })} placeholder="作品タイトル" />
+          </div>
+        </div>
+        <div className="row">
+          <div className="field">
+            <label>配信日</label>
+            <input value={manual.release_date} onChange={(e) => setManual({ ...manual, release_date: e.target.value })} placeholder="2023-05-01" />
+          </div>
+          <div className="field">
+            <label>レーベル</label>
+            <input value={manual.label} onChange={(e) => setManual({ ...manual, label: e.target.value })} />
+          </div>
+          <div className="field">
+            <label>メーカー</label>
+            <input value={manual.maker} onChange={(e) => setManual({ ...manual, maker: e.target.value })} />
+          </div>
+        </div>
+        <button className="btn primary" onClick={addManual} disabled={addingManual}>
+          {addingManual ? "登録中…" : "手動登録"}
+        </button>
+      </div>
+
       {/* 未確認候補（過去の検索で保存されたもの） */}
       {candidates.length > 0 && (
         <div className="panel">
@@ -258,6 +314,12 @@ function WorkEditor({ w, pageId, notify, reload }) {
           <div className="meta">
             {w.content_id}　{w.release_date?.slice(0, 10)}　
             <span className={`badge ${w.review_status}`}>{w.review_status}</span>
+            {w.source === "manual" && !w.fetched_at && (
+              <span className="badge trimmed" style={{ marginLeft: 6 }}>手動・API未取得</span>
+            )}
+            {w.source === "api" && (
+              <span className="badge full" style={{ marginLeft: 6 }}>API取得済み</span>
+            )}
           </div>
         </div>
       </div>

@@ -81,14 +81,16 @@ export default function PageDetail() {
                   {w.review_score != null && <span>★ {w.review_score}</span>}
                 </div>
                 {w.description && <p className="work-desc">{w.description}</p>}
-                <a
-                  className="btn-official"
-                  href={w.affiliate_url}
-                  target="_blank"
-                  rel="noopener noreferrer sponsored"
-                >
-                  公式ページで見る
-                </a>
+                {w.affiliate_url && (
+                  <a
+                    className="btn-official"
+                    href={w.affiliate_url}
+                    target="_blank"
+                    rel="noopener noreferrer sponsored"
+                  >
+                    公式ページで見る
+                  </a>
+                )}
               </div>
             </article>
           ))}

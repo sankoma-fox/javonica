@@ -23,8 +23,8 @@ export function buildItemUpsertStatements(db, item) {
           (content_id, title, affiliate_url, image_large, image_small,
            label, maker, series, series_id, maker_id,
            release_date, review_score, review_count, raw_description,
-           fetched_at, updated_at)
-         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?, datetime('now'), datetime('now'))
+           source, fetched_at, updated_at)
+         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?, 'api', datetime('now'), datetime('now'))
          ON CONFLICT(content_id) DO UPDATE SET
            title=excluded.title,
            affiliate_url=excluded.affiliate_url,
@@ -39,6 +39,7 @@ export function buildItemUpsertStatements(db, item) {
            review_score=excluded.review_score,
            review_count=excluded.review_count,
            raw_description=excluded.raw_description,
+           source='api',
            fetched_at=datetime('now'),
            updated_at=datetime('now')`
       )

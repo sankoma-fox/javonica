@@ -33,6 +33,7 @@ export async function onRequestGet({ params, env }) {
   const works = await env.DB.prepare(
     `SELECT i.content_id, i.title, i.image_small, i.release_date,
             i.review_status, i.rewritten_description,
+            i.source, i.fetched_at, i.affiliate_url,
             pi.manual_rank, pi.is_published
      FROM page_item pi
      JOIN item i ON i.content_id = pi.content_id

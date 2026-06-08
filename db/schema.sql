@@ -38,7 +38,7 @@ CREATE INDEX IF NOT EXISTS idx_page_status    ON page(status);
 CREATE TABLE IF NOT EXISTS item (
   content_id            TEXT PRIMARY KEY,       -- FANZAのcid
   title                 TEXT NOT NULL,
-  affiliate_url         TEXT NOT NULL,          -- アフィリエイトリンク(API正規)
+  affiliate_url         TEXT,                   -- アフィリエイトリンク(API正規)。手動登録時はNULL
   image_large           TEXT,                   -- 大画像URL
   image_small           TEXT,                   -- サムネURL
   label                 TEXT,                   -- レーベル
@@ -53,7 +53,9 @@ CREATE TABLE IF NOT EXISTS item (
   rewritten_description TEXT,                   -- リライト紹介文(公開はこちら)
   review_status         TEXT NOT NULL DEFAULT 'pending'
                           CHECK (review_status IN ('pending','approved','rejected')),
-  fetched_at            TEXT NOT NULL DEFAULT (datetime('now')),  -- 最終取得日時
+  source                TEXT NOT NULL DEFAULT 'api'
+                          CHECK (source IN ('api','manual')),  -- データ取得元
+  fetched_at            TEXT,                   -- API最終取得日時。手動登録のみだとNULL
   updated_at            TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
