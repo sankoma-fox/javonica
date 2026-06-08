@@ -8,7 +8,7 @@ pages_build_output_dir = "dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "javonica-db"
-database_id = "ここに wrangler d1 create で発行されたIDを貼る"
+database_id = "706b6594-c4b2-4e8b-b887-7d16bc516727"
 
 # 環境変数(API ID/アフィリエイトID)はシークレットで設定する:
 #   npx wrangler pages secret put DMM_API_ID
