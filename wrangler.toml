@@ -1,0 +1,16 @@
+name = "javonica"
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "dist"
+
+# D1 データベースのバインディング
+# 1. wrangler d1 create javonica-db で作成し、出力された database_id をここに貼る
+# 2. コード内では env.DB で参照
+[[d1_databases]]
+binding = "DB"
+database_name = "javonica-db"
+database_id = "ここに wrangler d1 create で発行されたIDを貼る"
+
+# 環境変数(API ID/アフィリエイトID)はシークレットで設定する:
+#   npx wrangler pages secret put DMM_API_ID
+#   npx wrangler pages secret put DMM_AFFILIATE_ID
+# ローカル開発では .dev.vars に書く(gitignore済み)

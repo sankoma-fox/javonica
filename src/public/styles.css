@@ -1,0 +1,176 @@
+:root {
+  --bg: #0f0f11;
+  --bg-elev: #18181c;
+  --bg-card: #1c1c21;
+  --line: #2a2a30;
+  --text: #e8e6e1;
+  --text-dim: #9a988f;
+  --text-faint: #6a6862;
+  --accent: #c9a227;        /* 抑えた金 */
+  --accent-dim: #8a7220;
+  --danger: #c0573f;
+  --font-serif: "Shippori Mincho", serif;
+  --font-sans: "Zen Kaku Gothic New", sans-serif;
+  --maxw: 1100px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+/* ---- ヘッダー ---- */
+.site-header {
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+  position: sticky;
+  top: 0;
+  background: rgba(15, 15, 17, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 50;
+}
+.site-header .inner { display: flex; align-items: baseline; justify-content: space-between; }
+.site-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 0.04em;
+}
+.site-title span { color: var(--accent); }
+.site-nav { font-size: 13px; color: var(--text-dim); }
+
+/* ---- ページ見出し ---- */
+.page-head { padding: 56px 0 40px; border-bottom: 1px solid var(--line); }
+.page-head h1 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(24px, 4vw, 38px);
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+}
+.page-head .sub { margin-top: 14px; color: var(--text-dim); font-size: 14px; }
+.eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+/* ---- ランキングカード（トップ／一覧） ---- */
+.grid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 40px 0; }
+@media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+.page-card {
+  background: var(--bg-card);
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: background 0.2s;
+}
+.page-card:hover { background: var(--bg-elev); }
+.page-card .pc-title { font-family: var(--font-serif); font-weight: 600; font-size: 19px; line-height: 1.5; }
+.page-card .pc-meta { font-size: 12px; color: var(--text-faint); display: flex; gap: 14px; }
+.page-card .pc-arrow { margin-top: auto; color: var(--accent); font-size: 13px; }
+
+/* ---- 作品ランキング（詳細ページ） ---- */
+.layout { display: grid; gap: 48px; padding: 44px 0 80px; }
+@media (min-width: 900px) { .layout { grid-template-columns: 1fr 280px; align-items: start; } }
+
+.work {
+  display: grid;
+  gap: 22px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 560px) { .work { grid-template-columns: 240px 1fr; } }
+
+.work-rank {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+.work-img {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  object-fit: cover;
+  display: block;
+}
+.work-body h3 { font-family: var(--font-serif); font-weight: 600; font-size: 18px; line-height: 1.5; margin-bottom: 8px; }
+.work-meta { font-size: 12px; color: var(--text-faint); display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+.work-desc { font-size: 14px; color: var(--text-dim); line-height: 1.85; }
+.work-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.tag { font-size: 11px; color: var(--text-dim); border: 1px solid var(--line); padding: 3px 10px; border-radius: 2px; }
+
+.samples { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 16px; }
+.samples img { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--bg-elev); border: 1px solid var(--line); }
+
+.btn-official {
+  display: inline-block;
+  margin-top: 18px;
+  background: var(--accent);
+  color: #16140c;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 11px 22px;
+  border-radius: 2px;
+  letter-spacing: 0.04em;
+  transition: background 0.2s;
+}
+.btn-official:hover { background: #d8b43a; }
+
+/* ---- サイド ---- */
+.side { position: sticky; top: 90px; }
+.side h4 { font-family: var(--font-serif); font-size: 14px; color: var(--text-dim); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); letter-spacing: 0.08em; }
+.side-item { display: flex; gap: 12px; padding: 11px 0; font-size: 13px; align-items: baseline; }
+.side-item .n { color: var(--accent); font-family: var(--font-serif); font-size: 12px; min-width: 18px; }
+.side-item .t { color: var(--text-dim); line-height: 1.5; }
+.side-item:hover .t { color: var(--text); }
+
+/* ---- フッター ---- */
+.site-footer { border-top: 1px solid var(--line); padding: 40px 0 60px; color: var(--text-faint); font-size: 12px; line-height: 1.9; }
+.site-footer .pr { color: var(--text-dim); margin-bottom: 12px; }
+.site-footer .pr strong { color: var(--accent); font-weight: 700; }
+
+/* ---- 年齢確認モーダル ---- */
+.age-gate {
+  position: fixed; inset: 0; z-index: 100;
+  background: #0a0a0c;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.age-box { max-width: 460px; text-align: center; }
+.age-box .mark { font-family: var(--font-serif); color: var(--accent); font-size: 13px; letter-spacing: 0.2em; margin-bottom: 24px; }
+.age-box h2 { font-family: var(--font-serif); font-weight: 700; font-size: 24px; line-height: 1.5; margin-bottom: 18px; }
+.age-box p { color: var(--text-dim); font-size: 13px; line-height: 1.9; margin-bottom: 32px; }
+.age-actions { display: flex; gap: 12px; justify-content: center; }
+.age-btn {
+  padding: 13px 34px; border-radius: 2px; font-weight: 700; font-size: 14px;
+  border: 1px solid var(--line); cursor: pointer; background: transparent; color: var(--text); font-family: var(--font-sans);
+  transition: all 0.2s;
+}
+.age-btn.yes { background: var(--accent); color: #16140c; border-color: var(--accent); }
+.age-btn.yes:hover { background: #d8b43a; }
+.age-btn.no:hover { border-color: var(--text-dim); color: var(--text); }
+
+.age-deny { position: fixed; inset: 0; z-index: 100; background: #0a0a0c; display: flex; align-items: center; justify-content: center; padding: 24px; text-align: center; }
+.age-deny p { color: var(--text-dim); font-size: 15px; font-family: var(--font-serif); }
+
+/* ---- 状態表示 ---- */
+.state { padding: 80px 20px; text-align: center; color: var(--text-faint); font-size: 14px; }
+.back-link { font-size: 13px; color: var(--text-dim); margin-bottom: 28px; display: inline-block; }
+.back-link:hover { color: var(--accent); }
